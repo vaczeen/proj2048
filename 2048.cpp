@@ -2,7 +2,7 @@
 #include<iomanip>
 #include<ctime>
 #include<cstdlib>
-
+//222
 using namespace std;
 
 int board[4][4];
