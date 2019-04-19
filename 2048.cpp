@@ -2,7 +2,8 @@
 #include<iomanip>
 #include<ctime>
 #include<cstdlib>
-//222
+#include<windows.h>
+
 using namespace std;
 
 int board[4][4];
@@ -106,6 +107,4 @@ int main(){
 		}
 	}
 	return 0;
-}
-
-//อิอิ
+} 
