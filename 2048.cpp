@@ -1,109 +1,103 @@
 #include<iostream>
-#include<iomanip>
-#include<ctime>
+#include<cstring>
+#include<cstdio>
 #include<cstdlib>
-#include<windows.h>
+#include<ctime>
+#include<iomanip>
+
+#include <stack>
+#include <vector>
 
 using namespace std;
 
-int board[4][4];
-int dirline[] = {1,0,-1,0};
-int dirColumn[] = {0,1,0,-1};
+int score=0;//score ???
 
-pair<int , int > generateUnoccupiedPosition(){
-	int occupied = 1, line, column;
-	while (occupied){
-		line = rand()%4;
-		column = rand()%4;
-		if(board[line][column] == 0)
-			occupied = 0;
+int undo_limit=0;// ????????
+
+int undo_score=0;
+class play{
+	stack<vector<vector<int> > > undo_stack;
+	stack<int> score_stack;
+
+
+	int g[4][4];
+	int g_copy[4][4];
+	void initialize();
+	void display();
+	void move_up();
+	void move_down();
+	void move_left();
+	void move_right();
+	int check_full();
+	int random_index(int x);
+	void sum_up();
+	void sum_down();
+	void sum_left();
+	void sum_right();
+	void generate_new_index();
+	int calculate_max();
+	void instructions();
+	int game_ends();
+	void end_display();
+	void win_display();
+	void lose_display();
+	void restart();
+
+	public:
+	void play_game();
+	play(){
+		
+
 	}
-	return make_pair(line, column);
-}
-void addPiece(){
-	pair<int , int > pos = generateUnoccupiedPosition();
-	board[pos.first][pos.second] = 2;
-}
+};
 
-void newGame(){
-	for(int i = 0;i < 4;++i)
-		for(int j = 0;j < 4 ;++j)
-			board[i][j] = 0;
+void play :: instructions(){
+	cout<<"\nInstructions for playing 2048 are:: \n"<<endl;
+	cout<<"For moving tiles enter \nw-move up/na-move left\nd-move right\ns-move down\n"<<endl;
+	cout<<"When two tiles with same number touch, they merge into one. \nWhen 2048 is created, the player wins!\n"<<endl;
 
-	addPiece();
+	cout << "maximum 5 undo operations are supported\n";
+	display();
 }
 
-void printUI(){
-	system("cls");
-	for(int i = 0; i<4 ;++i){
-		for(int j = 0; j<4 ;++j){
-			if(board[i][j]==0)
-				cout <<setw(4)<< ".";
-			else
-				cout <<setw(4)<< board[i][j];
-		}
-		cout << "\n";
+int play :: random_index(int x){
+	int index;
+	index=rand()%x + 0;
+	return index;
+}
+
+void play :: lose_display(){
+	system("clear");
+	cout<<"\t\t\tGAME OVER\n\n";
+	cout<<"Your final score is "<<score<<"\n\n";
+	cout<<"Thanks for trying!!!\n\n";
+	cout<<"\t\t\tA msdeep14 CREATION\n\n";
+	exit(0);
+}
+
+void play :: restart(){
+	char ch;
+	cout<<"\nAre you sure to restart the game??\n\n";
+	cout<<"enter y to restart and n to continue.\n\n";
+	cin>>ch;
+	if(ch=='y'){
+		score=0;
+		undo_score=0;
+		undo_stack = stack<vector<vector<int> > >();
+		score_stack = stack<int>();
+		initialize();
 	}
-	cout << "n: newGame, q:quit,  w: up, s:down d:right, a: left \n";
-}
-bool canDoMove(int line, int column, int nextLine, int nextColumn){
-	if(nextLine < 0 || nextColumn < 0 || nextLine >= 4 || nextColumn >=4
-    || (board[line][column] != board[nextLine][nextColumn] && board[nextLine][nextColumn] != 0))
-		return false;
-	return true;
 }
 
-void applyMove(int direction){
-	int startLine = 0, startColumn = 0 , lineStep = 1 , columnStep = 1;
-	if(direction == 0){
-		startLine = 3;
-		lineStep = -1;
-	}
-	if(direction == 1){
-		startColumn = 3;
-		columnStep = -1;
-	}
-	int movePossible , canAddPiece=0;
-	do{
-		movePossible=0;
-		for(int i = startLine; i>= 0 && i<4 ; i += lineStep)
-			for(int j = startColumn; j>= 0 && j<4 ;j += columnStep){
-				int nextI = i + dirline[direction], nextJ = j + dirColumn[direction];
-
-				if(board[i][j] && canDoMove(i, j, nextI, nextJ)){
-					board[nextI][nextJ] += board[i][j];
-					board[i][j] = 0;
-					movePossible = canAddPiece = 1;
-				}
+int play :: check_full(){
+	int full_flag=1;
+	for(int i=0;i<4;i++){
+		for(int j=0;j<4;j++){
+			if(g[i][j]==0){
+				full_flag=0;
+				break;
 			}
-
-		printUI();
-	}while (movePossible);
-
-	if (canAddPiece)
-		addPiece();
-    }
-
-int main(){
-	srand(time(0));
-	char commandToDir[128];
-	commandToDir['s'] = 0;
-	commandToDir['d'] = 1;
-	commandToDir['w'] = 2;
-	commandToDir['a'] = 3;
-	newGame();
-	while (true){
-		printUI();
-		char command;
-		cin >> command;
-		if(command == 'n')
-			newGame();
-		else if(command == 'q')
-			break;
-		else {
-			int currentDirection = commandToDir[command];
-			applyMove(currentDirection);
 		}
 	}
-	return 0;
-} 
+	return full_flag;
+}
