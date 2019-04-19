@@ -101,3 +101,86 @@ int play :: check_full(){
 	}
 	return full_flag;
 }
+
+void play :: win_display(){
+	char ch;
+	cout<<"\t\t\tYOU WON!!!\n\n";
+	cout<<"Your total score is "<<score<<"\n\n";
+	cout<<"Do you wish to continue???\n";
+	cout<<"Enter y to continue and n to quit\n\n";
+	cin>>ch;
+	if(ch=='n'){
+		end_display();
+	}
+}
+
+int play :: calculate_max(){
+	int i,j;
+	int max=0;
+	for(i=0;i<4;i++){
+		for(j=0;j<4;j++){
+			if(g[i][j]>max){
+				max=g[i][j];
+			}
+		}
+	}
+	return max;
+}
+
+void play :: end_display(){
+	system("clear");
+	cout<<"\nYour final score is :: "<<score<<endl<<endl;
+	cout<<"Thanks for trying!!!\n\n";
+	cout<<"Good Bye!!!\n"<<endl;
+	cout<<"\t\t\tA msdeep14 CREATION\n\n";
+	exit(0);
+}
+
+int play :: game_ends(){
+	int i,j,flag=1;
+	for(i=0;i<4;i++){
+		for(j=0;j<3;j++){
+			if(g[i][j]==g[i][j+1]){
+				flag=0;
+				break;
+			}
+		}
+		if(flag==0){
+				break;
+		}
+	}
+	if(flag==1){
+		for(i=0;i<3;i++){
+			for(j=0;j<4;j++){
+				if(g[i][j]==g[i+1][j]){
+					flag=0;
+					break;
+				}
+			}
+			if(flag==0){
+				break;
+			}
+		}
+	}
+	return flag;
+}
+
+
+void play :: generate_new_index(){
+	int flag=1;
+	if(!check_full()){
+		while(flag){
+			int i=random_index(4);
+			int j=random_index(4);
+			if(g[i][j]==0){
+				int y=rand()%10+0;
+				if(y<6){
+					g[i][j]=2;
+				}else{
+					g[i][j]=4;
+				}
+				flag=0;
+			}
+		}
+	}
+}
