@@ -30,7 +30,6 @@ void newGame(){
 		for(int j = 0;j < 4 ;++j)
 			board[i][j] = 0;
 
-
 	addPiece();
 }
 
