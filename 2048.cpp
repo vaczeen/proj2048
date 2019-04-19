@@ -4,7 +4,6 @@
 #include<cstdlib>
 #include<ctime>
 #include<iomanip>
-
 #include <stack>
 #include <vector>
 
@@ -177,6 +176,87 @@ void play :: generate_new_index(){
 					g[i][j]=4;
 				}
 				flag=0;
+			}
+		}
+	}
+}
+
+void play :: initialize(){
+	for(int i=0;i<4;i++){
+		for(int j=0;j<4;j++){
+			g[i][j]=0;
+			g_copy[i][j]=0;
+		}
+	}
+	int i=random_index(4);
+	int j=random_index(4);
+	g[i][j]=2;
+	i=random_index(4);
+	j=random_index(4);
+	g[i][j]=2;
+	display();
+}
+
+
+void play :: move_up(){
+	for(int i=0;i<4;i++){
+		for(int j=0;j<4;j++){
+			if(!g[j][i]){
+				for(int k=j+1;k<4;k++){
+					if(g[k][i]){
+						g[j][i]=g[k][i];
+						g[k][i]=0;
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+
+void play :: move_down(){
+	for(int i=0;i<4;i++){
+		for(int j=3;j>=0;j--){
+			if(!g[j][i]){
+				for(int k=j-1;k>=0;k--){
+					if(g[k][i]){
+						g[j][i]=g[k][i];
+						g[k][i]=0;
+						break;
+					}
+				}
+            }
+        }
+    }
+}
+
+void play :: move_left(){
+	for(int i=0;i<4;i++){
+		for(int j=0;j<4;j++){
+			if(!g[i][j]){
+				for(int k=j+1;k<4;k++){
+					if(g[i][k]){
+						g[i][j]=g[i][k];
+						g[i][k]=0;
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+
+void play :: move_right(){
+	for(int i=0;i<4;i++){
+		for(int j=3;j>=0;j--){
+			if(!g[i][j]){
+				for(int k=j-1;k>=0;k--){
+					if(g[i][k]){
+						g[i][j]=g[i][k];
+						g[i][k]=0;
+						break;
+					}
+				}
 			}
 		}
 	}
