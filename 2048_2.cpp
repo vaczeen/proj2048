@@ -132,7 +132,7 @@ void play :: end_display(){
 	cout<<"\nYour final score is :: "<<score<<endl<<endl;
 	cout<<"Thanks for trying!!!\n\n";
 	cout<<"Good Bye!!!\n"<<endl;
-	cout<<"\t\t\tA msdeep14 CREATION\n\n";
+	
 	exit(0);
 }
 
