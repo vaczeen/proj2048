@@ -12,41 +12,35 @@ using namespace std;
 
 int mat[6][16];
 int g=0,bul=1,l=0,r;
-int score=1,level=1,dela=100;
-
-void gotoxy(int x, int y)
-{
+int score = 0; 
+void gotoxy(int x, int y){
   COORD coord;
   coord.X = x;
   coord.Y = y;
   SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void resetb()
-{
+void resetb(){
      for(int j=0;j<16;j++){
              for(int i=0;i<6;i++){mat[i][j]=0;}
 
              }
 }
 
-void drawp(int x,int y)
-{
-if(x>=0&x<6&y>=0&y<16){mat[x][y]=1;}
+void drawp(int x,int y){
+	if(x>=0&x<6&y>=0&y<16){mat[x][y]=1;}
 }
 
-void drawc(int x,int y)
-{
-drawp(1+x,0+y);
-drawp(0+x,1+y);drawp(1+x,1+y);drawp(2+x,1+y);
-drawp(1+x,2+y);
-drawp(0+x,3+y);drawp(1+x,3+y);drawp(2+x,3+y);
+void drawc(int x,int y){
+	drawp(1+x,0+y);
+	drawp(0+x,1+y);drawp(1+x,1+y);drawp(2+x,1+y);
+	drawp(1+x,2+y);
+	drawp(0+x,3+y);drawp(1+x,3+y);drawp(2+x,3+y);
 }
 
-int getr()
-{
- int n;
- if(rand()%2==0){n=0;}else{n=3;}
+int getr(){
+	int n;
+	if(rand()%2==0){n=0;}else{n=3;}
   return n;
 }
 
@@ -63,8 +57,7 @@ int index=1;
 
 int showMenu();
 
-DWORD WINAPI ThreadFn(LPVOID vpParam)
-{
+DWORD WINAPI ThreadFn(LPVOID vpParam){
 	while (1) {
 		for(int i=8;i<=190;i++)
             {
@@ -104,8 +97,6 @@ void newGame(){
 	for(int i = 0;i < 4;++i)
 		for(int j = 0;j < 4 ;++j)
 			board[i][j] = 0;
-
-
 	addPiece();
 }
 
@@ -121,6 +112,7 @@ void printUI(){
 		cout << "\n";
 	}
 	cout << "n: newGame, q:quit,  w: up, s:down d:right, a: left \n";
+	cout << "your score = " << score << endl;
 }
 bool canDoMove(int line, int column, int nextLine, int nextColumn){
 	if(nextLine < 0 || nextColumn < 0 || nextLine >= 4 || nextColumn >=4
@@ -150,6 +142,7 @@ void applyMove(int direction){
 					board[nextI][nextJ] += board[i][j];
 					board[i][j] = 0;
 					movePossible = canAddPiece = 1;
+					score+=((log2(board[nextI][nextJ]))-1)*board[nextI][nextJ];
 				}
 			}
 
@@ -227,27 +220,13 @@ int showMenu(){
         else if (index==2){
                 ret=1;
                 system("cls");
-             cout<<"DOOD BEY";
+             cout<<"GOOD BEY";
         }
     return ret;
 }
-
-
-
-
-
-
-
-
-
 int main()
 {
-   
     showMenu();
-    
-	
-
-
     return 0;
 }
 
