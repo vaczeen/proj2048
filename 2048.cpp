@@ -6,6 +6,7 @@
 #include<iomanip>
 #include <stack>
 #include <vector>
+#include<windows.h>
 
 using namespace std;
 
@@ -444,7 +445,7 @@ void play :: play_game(){
 
 void play :: display(){
 	cout<<"\n\t\t\t\t\t\t\t 2048\n\n";
-	cout<<"\t\t\t\t\t\t  A msdeep14 CREATION\n\n";
+	
 	cout<<"  score :: "<<score<<endl<<endl;
 	for(int i=0;i<4;i++){
 		cout<<"                       ";
