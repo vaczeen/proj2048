@@ -6,7 +6,7 @@
 #include<iomanip>
 #include <stack>
 #include <vector>
-#include<windows.h>
+#include <windows.h>
 
 using namespace std;
 
