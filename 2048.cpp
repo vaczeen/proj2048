@@ -340,7 +340,7 @@ void play :: play_game(){
 	system("cls");
 	initialize();
 	cin>>choice;
-	if(choice=='h') win_display();
+	
 	while((choice=='w' || choice=='a' || choice=='s' || choice=='d' || choice=='q' || choice=='i' || choice=='u' || choice=='r')){
 		if(choice != 'u'){
 			vector<vector <int> > current_copy;
