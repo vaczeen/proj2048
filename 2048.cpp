@@ -9,6 +9,12 @@
 #include <windows.h>
 #include <string>
 #include<fstream>
+//#include "windows.h"
+#include <conio.h>
+#include<iostream>
+#include<unistd.h>
+#include<cmath>
+
 
 using namespace std;
 
@@ -524,11 +530,81 @@ void play :: ledderbord(){
 	
 }
 
-int main(){
+void gggg(){
+	system("cls");
 	play p;
 	srand(time(NULL));
 	cout << "Wellcome to 2048 \nPlease enter your name: ";
 	cin >> name;
 	p.play_game();
+}
+
+void gotoxy(int x, int y)
+{
+  COORD coord;
+  coord.X = x;
+  coord.Y = y;
+  SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
+HANDLE hstdout = GetStdHandle( STD_OUTPUT_HANDLE );
+int index=1;
+    void colorit(int col){
+        SetConsoleTextAttribute( hstdout, col );
+    }
+void exitGame(){
+
+system("cls");
+gotoxy(3,3);cout<<"GOOD BYE!";
+colorit(15);
+Sleep(2500);
+}
+
+int key;
+int showMenu(){
+    int ret=1;
+    system("cls");
+
+        key=0;
+        system("cls");
+        while(key!=13){
+        gotoxy(3,3);
+        colorit(15);
+        cout<<"2048 GAME";
+        gotoxy(3,4);
+        cout<<"================";
+        gotoxy(3,5);
+        colorit(15);
+        if(index==1){colorit(12);}
+        cout<<"START GAME";
+        gotoxy(3,6);
+        colorit(15);
+    	if(index==2){colorit(12);}
+        cout<<"EXIT";
+        gotoxy(20,12);
+        colorit(15);cout<<"By:CPE 61";colorit(15);
+        gotoxy(0,0);
+        
+        key=getch();
+        if(key==80){index++;}
+        else if(key==72){index--;}
+        if(index==5){index=1;}
+        if(index==0){index=4;}
+        }
+        if(index==1){
+                gggg();
+        }
+      
+
+        else if (index==2){
+                ret=1;
+            exitGame();
+        }
+    return ret;
+}
+
+
+int main(){
+	showMenu();
 	return 0;
 }
