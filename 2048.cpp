@@ -59,10 +59,10 @@ class play{
 void play :: instructions(){
 	system("cls");
 	cout<<"\nInstructions for playing 2048 are:: \n"<<endl;
-	cout<<"For moving tiles enter \nw-move up/na-move left\nd-move right\ns-move down\n"<<endl;
+	cout<<"For moving tiles enter \nw-move up\na-move left\nd-move right\ns-move down\n"<<endl;
 	cout<<"When two tiles with same number touch, they merge into one. \nWhen 2048 is created, the player wins!\n"<<endl;
 
-	cout << "maximum 5 undo operations are supported\n";
+	cout << "You can undo 1 time for per move\n";
 	display();
 }
 
@@ -223,6 +223,7 @@ void play :: move_up(){
 					if(g[k][i]){
 						g[j][i]=g[k][i];
 						g[k][i]=0;
+						undo_limit=0;
 						break;
 					}
 				}
@@ -239,6 +240,7 @@ void play :: move_down(){
 					if(g[k][i]){
 						g[j][i]=g[k][i];
 						g[k][i]=0;
+						undo_limit=0;
 						break;
 					}
 				}
@@ -255,6 +257,7 @@ void play :: move_left(){
 					if(g[i][k]){
 						g[i][j]=g[i][k];
 						g[i][k]=0;
+						undo_limit=0;
 						break;
 					}
 				}
@@ -271,6 +274,7 @@ void play :: move_right(){
 					if(g[i][k]){
 						g[i][j]=g[i][k];
 						g[i][k]=0;
+						undo_limit=0;
 						break;
 					}
 				}
@@ -448,7 +452,7 @@ void play :: play_game(){
 		
 		//??????????????
 		case 'u':
-			if(undo_limit < 5){
+			if(undo_limit < 1){
 				if(!undo_stack.empty()){
 					vector<vector<int> > previous_copy = undo_stack.top();
 					undo_stack.pop();
@@ -460,15 +464,14 @@ void play :: play_game(){
 					score -= score_stack.top();
 					score_stack.pop();
 					undo_limit += 1;
-				}else{
 					system("cls");
-					cout << "\n\nundo not POSSIBLE, reached initial state!!!\n\n";
 					display();
 				}
+				
 			}else{
 				system("cls");
 				display();
-				cout<<"\n\nYou cannot undo the matrix more than 5 times.\n\nSorry!!!\n"<<endl;
+				cout<<"\n\nYou cannot undo !!!\n"<<endl;
 			}
 	}
 	//?????????????? ?????????? 2048 ?????
