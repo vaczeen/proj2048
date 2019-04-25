@@ -16,6 +16,7 @@
 #include<cmath>
 
 
+
 using namespace std;
 
 int score=0;//score ???
@@ -55,11 +56,9 @@ class play{
 	void ledderbord();
 
 	public:
-	void play_game();
-	play(){
-		
 
-	}
+	void play_game();
+	
 };
 
 void play :: instructions(){
@@ -351,6 +350,8 @@ void play :: play_game(){
 	initialize();
 	cin>>choice;
 	
+	
+	
 	while((choice=='w' || choice=='a' || choice=='s' || choice=='d' || choice=='q' || choice=='i' || choice=='u' || choice=='r')){
 		if(choice != 'u'){
 			vector<vector <int> > current_copy;
@@ -493,9 +494,11 @@ void play :: play_game(){
 		}
 		cout<<"enter choice: "<<endl;
 		cin>>choice;
+		
 		while(choice!='w'  && choice!='s'  && choice!='d'  && choice!='a' && choice!='q' && choice!='i' && choice!='u' && choice!='r'){
 			cout<<"\nYou had entered the wrong choice!\nPlease enter correct choice to continue!"<<endl;
 			cin>>choice;
+			
 		}
 	}
 }
@@ -530,7 +533,7 @@ void play :: ledderbord(){
 	
 }
 
-void gggg(){
+void Start(){
 	system("cls");
 	play p;
 	srand(time(NULL));
@@ -552,8 +555,8 @@ int index=1;
     void colorit(int col){
         SetConsoleTextAttribute( hstdout, col );
     }
-void exitGame(){
 
+void exitGame(){
 system("cls");
 gotoxy(3,3);cout<<"GOOD BYE!";
 colorit(15);
@@ -562,7 +565,7 @@ Sleep(2500);
 
 int key;
 int showMenu(){
-    int ret=1;
+    
     system("cls");
 
         key=0;
@@ -582,25 +585,25 @@ int showMenu(){
     	if(index==2){colorit(12);}
         cout<<"EXIT";
         gotoxy(20,12);
-        colorit(15);cout<<"By:CPE 61";colorit(15);
+        colorit(15);cout<<"By:CPECMU 61";colorit(15);
         gotoxy(0,0);
         
         key=getch();
         if(key==80){index++;}
         else if(key==72){index--;}
-        if(index==5){index=1;}
-        if(index==0){index=4;}
+        if(index==3){index=1;}
+        if(index==0){index=2;}
         }
         if(index==1){
-                gggg();
+                Start();
         }
       
 
         else if (index==2){
-                ret=1;
+                
             exitGame();
         }
-    return ret;
+    
 }
 
 
