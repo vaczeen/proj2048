@@ -352,8 +352,9 @@ void play :: play_game(){
 	
 	
 	
-	while((choice=='w' || choice=='a' || choice=='s' || choice=='d' || choice=='q' || choice=='i' || choice=='u' || choice=='r')){
-		if(choice != 'u'){
+	while((choice=='w' || choice=='a' || choice=='s' || choice=='d' || choice=='q' || choice=='i' || choice=='u' || choice=='r'||
+	 choice=='W' || choice=='A' || choice=='S' || choice=='D' || choice=='Q' || choice=='I' || choice=='U' || choice=='R')){
+		if(choice != 'u' || choice != 'U'){
 			vector<vector <int> > current_copy;
 			current_copy.resize(4);
 			for(int m = 0;m<4; m++){
@@ -368,6 +369,16 @@ void play :: play_game(){
 
 	switch(choice){
 		//????????????????
+		case 'W':
+			undo_score=0;
+			move_up();
+			sum_up();
+			move_up();
+			generate_new_index();
+			system("cls");
+			display();
+			score_stack.push(undo_score);
+			break;
 		case 'w':
 			undo_score=0;
 			move_up();
@@ -379,6 +390,16 @@ void play :: play_game(){
 			score_stack.push(undo_score);
 			break;
 		//????????????????
+		case 'S':
+			undo_score=0;
+			move_down();
+			sum_down();
+			move_down();
+			generate_new_index();
+			system("cls");
+			display();
+			score_stack.push(undo_score);
+			break;
 		case 's':
 			undo_score=0;
 			move_down();
@@ -390,6 +411,16 @@ void play :: play_game(){
 			score_stack.push(undo_score);
 			break;
 		//??????????????
+		case 'A':
+			undo_score=0;
+			move_left();
+			sum_left();
+			move_left();
+			generate_new_index();
+			system("cls");
+			display();
+			score_stack.push(undo_score);
+			break;
 		case 'a':
 			undo_score=0;
 			move_left();
@@ -401,6 +432,16 @@ void play :: play_game(){
 			score_stack.push(undo_score);
 			break;
 		//??????????????
+		case 'D':
+			undo_score=0;
+			move_right();
+			sum_right();
+			move_right();
+			generate_new_index();
+			system("cls");
+			display();
+			score_stack.push(undo_score);
+			break;
 		case 'd':
 			undo_score=0;
 			move_right();
@@ -412,10 +453,25 @@ void play :: play_game(){
 			score_stack.push(undo_score);
 			break;
 		//quit
+		case 'Q':
+			cout<<"Are you sure you want to quit??\nEnter y to quit and n to continue!\n"<<endl;
+			cin>>ch;
+			while(ch!='y'&&ch!='n'&& ch!='Y'&&ch!='N'){
+				system("cls");
+				cout<<"Wrong input\n";
+				cout<<"Are you sure you want to quit??\n";
+				cout<<"Enter y to quit and n to continue!\n\n";
+				cin>>ch;
+			}
+			if(ch=='y' || ch == 'Y'){
+				end_display();
+			}
+			system("cls");
+			display();
 		case 'q':
 			cout<<"Are you sure you want to quit??\nEnter y to quit and n to continue!\n"<<endl;
 			cin>>ch;
-			while(ch!='y'&&ch!='n'){
+			while(ch!='y'&&ch!='n'&& ch!='Y'&&ch!='N'){
 				system("cls");
 				cout<<"Wrong input\n";
 				cout<<"Are you sure you want to quit??\n";
@@ -431,23 +487,45 @@ void play :: play_game(){
 			
 			break;
 		//?????????????????
+		case 'I':
+			instructions();
+			break;
 		case 'i':
 			instructions();
 			break;
 		//restart game
+		case 'R':
+			char chh;
+			cout<<"\nAre you sure to restart the game??\n\n";
+			cout<<"enter y to restart and n to continue.\n\n";
+			cin>>chh;
+			while(chh!='y'&&chh!='n'&&chh!='Y'&&chh!='N'){
+				system("cls");
+				cout<<"Wrong input\n";
+				cout<<"Are you sure to restart the game??\n";
+				cout<<"Enter y to restart and n to continue.\n\n";
+				cin>>chh;
+			}
+			if(chh=='y'|| chh=='Y'){
+				restart();
+			}
+			system("cls");
+			display();
+			break;
+
 		case 'r':
 			char ch;
 			cout<<"\nAre you sure to restart the game??\n\n";
 			cout<<"enter y to restart and n to continue.\n\n";
 			cin>>ch;
-			while(ch!='y'&&ch!='n'){
+			while(ch!='y'&&ch!='n'&&ch!='Y'&&ch!='N'){
 				system("cls");
 				cout<<"Wrong input\n";
 				cout<<"Are you sure to restart the game??\n";
 				cout<<"Enter y to restart and n to continue.\n\n";
 				cin>>ch;
 			}
-			if(ch=='y'){
+			if(ch=='y'||ch == 'Y'){
 				restart();
 			}
 			system("cls");
@@ -458,6 +536,29 @@ void play :: play_game(){
 			
 		
 		//??????????????
+		case 'U':
+			if(undo_limit < 1){
+				if(!undo_stack.empty()){
+					vector<vector<int> > previous_copy = undo_stack.top();
+					undo_stack.pop();
+					for(int m=0;m<4;m++){
+						for(int n=0;n<4;n++){
+							g[m][n]=previous_copy[m][n];
+						}
+					}
+					score -= score_stack.top();
+					score_stack.pop();
+					undo_limit += 1;
+					system("cls");
+					display();
+				}
+				
+			}else{
+				system("cls");
+				display();
+				cout<<"\n\nYou cannot undo !!!\n"<<endl;
+			}
+
 		case 'u':
 			if(undo_limit < 1){
 				if(!undo_stack.empty()){
@@ -495,7 +596,8 @@ void play :: play_game(){
 		cout<<"enter choice: "<<endl;
 		cin>>choice;
 		
-		while(choice!='w'  && choice!='s'  && choice!='d'  && choice!='a' && choice!='q' && choice!='i' && choice!='u' && choice!='r'){
+		while(choice!='w'  && choice!='s'  && choice!='d'  && choice!='a' && choice!='q' && choice!='i' && choice!='u' && choice!='r'&&
+			choice!='W'  && choice!='S'  && choice!='D'  && choice!='A' && choice!='Q' && choice!='I' && choice!='U' && choice!='R'){
 			cout<<"\nYou had entered the wrong choice!\nPlease enter correct choice to continue!"<<endl;
 			cin>>choice;
 			
